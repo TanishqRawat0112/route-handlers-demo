@@ -3,8 +3,12 @@ import { comments } from "./data";
 
 export async function GET(request:NextRequest){
     const searchParams = request.nextUrl.searchParams
-    
-return  Response.json(comments);
+    const query = searchParams.get("query")
+    const filteredComments = query ?
+    comments.filter(comment=>comment.text.includes(query)):
+    comments
+
+    return Response.json(filteredComments);
 }
 
 export async function POST(request:Request){
